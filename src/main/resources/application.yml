@@ -1,0 +1,10 @@
+spring:
+    data:
+        mongodb:
+            host: localhost
+            port: 27017
+            database: ffcinema
+    r2dbc:
+        url: r2dbc:pool:mysql://localhost:3306/ffcinema
+        username: root
+        password: test
