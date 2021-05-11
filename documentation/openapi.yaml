@@ -1,0 +1,216 @@
+openapi: 3.0.1
+info:
+  title: FF Cinema API
+  version: 1.0.0
+  description: >-
+    Interface for FF Cinema, which plays only movies from the Fast & Furious
+    franchise.
+
+tags:
+  - name: showings
+    description: Show times and prices for movie showings
+  - name: ratings
+    description: User ratings for movies
+  - name: info
+    description: Movie info from OMDb
+
+paths:
+  /showings:
+    get:
+      tags:
+        - showings
+      summary: Get info for movie showings
+      parameters:
+        - in: query
+          required: false
+          name: movieId
+          schema:
+            type: string
+            example: 'tt0232500'
+      responses:
+        200:
+          description: Successfuily received info for movie showings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: '#/components/schemas/MovieShowing'
+    post:
+      tags:
+        - showings
+      summary: Add or update movie showing info
+      requestBody:
+        required: true
+        description: Movie showing info to add or update
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/MovieShowing'
+      responses:
+        200:
+          description: Successfully added or updated movie showing info
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/MovieShowing'
+  /showings/{showingId}:
+    parameters:
+      - in: path
+        required: true
+        name: showingId
+        schema:
+          type: string
+          example: 4
+    get:
+      tags:
+        - showings
+      summary: Get info for a specific movie showing
+      responses:
+        200:
+          description: Successfuily received info for specific movie showing
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/MovieShowing'
+    delete:
+      tags:
+        - showings
+      summary: Delete a specific movie showing
+      responses:
+        200:
+          description: Successfully deleted specific movie showing
+  /ratings:
+    get:
+      tags:
+        - ratings
+      summary: Get all user ratings
+      responses:
+        200:
+          description: Successfully recieved user ratings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: '#/components/schemas/UserRating'
+    post:
+      tags:
+        - ratings
+      summary: Add or update user ratings
+      requestBody:
+        required: true
+        description: User ratings to add or update
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/MovieShowing'
+      responses:
+        200:
+          description: Successfully added or updated user ratings
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/MovieShowing'
+  /ratings/{userId}:
+    parameters:
+      - in: path
+        required: true
+        name: userId
+        schema:
+          type: string
+          example: 7
+      - in: query
+        required: false
+        name: movieId
+        schema:
+          type: string
+          example: 'tt0232500'
+    get:
+      tags:
+        - ratings
+      summary: Get a specific user's ratings
+      responses:
+        200:
+          description: Successfuily received specific user's ratings
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/UserRating'
+    delete:
+      tags:
+        - ratings
+      summary: Delete a specific user's ratings
+      responses:
+        200:
+          description: Successfully deleted specific user's ratings
+  /info/{movieId}:
+    get:
+      tags:
+        - info
+      summary: Get info for a specific movie
+      parameters:
+        - in: path
+          required: true
+          name: movieId
+          schema:
+            type: string
+            example: 'tt0232500'
+      responses:
+        200:
+          description: Successfuily received info for specific movie
+
+components:
+  schemas:
+    MovieShowing:
+      description: Show time and price for a given movie showing
+      properties:
+        showingId:
+          type: integer
+          minimum: 1
+          example: 4
+
+        movieId:
+          type: string
+          example: 'tt0232500'
+
+        showTime:
+          type: string
+          format: date-time
+          example: '2021-05-03T12:34:56'
+
+        price:
+          type: number
+          example: 12.99
+    UserRating:
+      description: Movie ratings out of 5 for a given user
+      properties:
+        userId:
+          type: integer
+          example: 7
+
+        ratings:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/Rating'
+    Rating:
+      description: Rating out of 5 for a given movie
+      properties:
+        movieId:
+          type: string
+          example: 'tt0232500'
+
+        score:
+          type: integer
+          minimum: 1
+          maximum: 5
+          example: 3

@@ -24,10 +24,14 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+	implementation("org.junit.jupiter:junit-jupiter:5.7.0")
 	runtimeOnly("dev.miku:r2dbc-mysql")
 	runtimeOnly("mysql:mysql-connector-java")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
+	testImplementation("io.mockk:mockk:1.11.0")
+	testImplementation("org.junit.jupiter:junit-jupiter-api:5.4.2")
+	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.4.2")
 }
 
 tasks.withType<KotlinCompile> {
