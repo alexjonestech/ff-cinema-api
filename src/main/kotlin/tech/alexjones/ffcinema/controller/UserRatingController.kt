@@ -24,23 +24,26 @@ class UserRatingController(val userRatingRepository: UserRatingRepository) {
             .awaitFirstOrNull()
 
     @DeleteMapping("/{userId}")
-    suspend fun delete(@PathVariable userId: Long, @RequestParam movieId: String?) =
+    suspend fun delete(@PathVariable userId: Long, @RequestParam movieId: String?) {
         movieId?.let {
-            deleteByMovieId(userId, movieId) } ?:
-        deleteAll(userId)
+                deleteByMovieId(userId, movieId) } ?:
+                deleteAll(userId)
+    }
 
-    suspend fun deleteAll(userId: Long) =
+    suspend fun deleteAll(userId: Long) {
         userRatingRepository
             .deleteById(userId)
             .awaitFirstOrNull()
+    }
 
-    suspend fun deleteByMovieId(userId: Long, movieId: String) =
+    suspend fun deleteByMovieId(userId: Long, movieId: String) {
         userRatingRepository
             .findById(userId)
             .map { deleteUserRating(it, movieId) }
             .flatMap { userRatingRepository.save(it) }
             .ignoreElement()
             .awaitFirstOrNull()
+    }
 
     private fun deleteUserRating(userRating: UserRating, movieId: String) =
         UserRating(
