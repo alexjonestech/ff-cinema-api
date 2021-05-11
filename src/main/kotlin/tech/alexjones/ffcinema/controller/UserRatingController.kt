@@ -23,11 +23,11 @@ class UserRatingController(val userRatingRepository: UserRatingRepository) {
             .findById(userId)
             .awaitFirstOrNull()
 
-    @DeleteMapping
+    @DeleteMapping("/{userId}")
     suspend fun delete(@PathVariable userId: Long, @RequestParam movieId: String?) =
         movieId?.let {
             deleteByMovieId(userId, movieId) } ?:
-            deleteAll(userId)
+        deleteAll(userId)
 
     suspend fun deleteAll(userId: Long) =
         userRatingRepository
