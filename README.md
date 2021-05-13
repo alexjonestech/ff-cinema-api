@@ -1,5 +1,5 @@
 # FF Cinema API
-Interface for FF Cinema, which plays only movies from the Fast & Furious franchise.
+Web backend for FF Cinema, which plays only movies from the Fast & Furious franchise.
 
 # Overview
 This backend service was created as part of an interview coding project. The requirements are to build out a backend service with an API that can be consumed directly and by a (hypothetical) frontend service. The main features to be implemented are:
