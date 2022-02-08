@@ -38,3 +38,6 @@ out/
 
 ### Database Volumes ###
 data/
+
+### Other ##
+feedback.txt
